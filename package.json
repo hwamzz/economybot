@@ -12,6 +12,7 @@
   "dependencies": {
     "ascii-table": "0.0.9",
     "discord.js": "^12.5.1",
-    "mongoose": "^5.11.13"
+    "mongoose": "^5.11.13",
+    "vi": "^1.0.0"
   }
 }
