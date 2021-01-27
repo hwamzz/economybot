@@ -79,3 +79,4 @@ client.rmv = (id, coins) => {
 }
 
 client.login(token)
+

@@ -46,4 +46,5 @@ module.exports = {
             client.rmv(message.author.id, amountToBet)
         }
     }
+
 }
