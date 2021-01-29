@@ -1,15 +1,17 @@
-const {Collection, Client, Discord} = require('discord.js')
+const { Collection, Client, Discord } = require('discord.js')
 const fs = require('fs')
 const client = new Client({
     disableEveryone: true
 })
-const schema = require('./schema')
+const money = require('./schemas/money')
 const mongo = require('mongoose');
+const cards = require('./schemas/cards')
 
 mongo.connect("mongodb+srv://hwamzz:Hooded789@cluster0.ndh1e.mongodb.net/test", {
     useUnifiedTopology: true,
     useNewUrlParser: true
 })
+
 const config = require('./config.json')
 const prefix = config.prefix
 const token = config.token
@@ -19,7 +21,6 @@ client.categories = fs.readdirSync("./commands/");
 ["command"].forEach(handler => {
     require(`./handlers/${handler}`)(client);
 }); 
-
 
 const Timeout = new Collection();
 const ms = require('ms')
@@ -50,32 +51,54 @@ client.on('ready', () => {
 })
 
 client.bal = (id) => new Promise(async ful => {
-    const data = await schema.findOne({ id });
+    const data = await money.findOne({ id });
     if(!data) return ful(0)
     ful(data.coins)
 })
 
 client.add = (id, coins) => {
-    schema.findOne({ id }, async(err, data) => {
+    money.findOne({ id }, async(err, data) => {
         if(err) throw err;
         if(data) {
             data.coins += coins;
         } else {
-            data = new schema({ id, coins })
+            data = new money({ id, coins })
         }
         data.save();
     })
 }
 client.rmv = (id, coins) => {
-    schema.findOne({ id }, async(err, data) => {
+    money.findOne({ id }, async(err, data) => {
         if(err) throw err;
         if(data) {
             data.coins -= coins;
         } else {
-            data = new schema({ id, coins: -coins  })
+            data = new money({ id, coins: -coins  })
         }
         data.save();
     })
+}
+
+function seedCards() {
+    const suits = ['HEARTS', 'DIAMONDS', 'CLUBS', 'SPADES']
+    const cards = [
+        {name: 'ACE', value: 1, alternative_value: 11}, 
+        {name: '2', value: 2}, 
+        {name: '3', value: 3}, 
+        {name: '4', value: 4}, 
+        {name: '5', value: 5}, 
+        {name: '6', value: 6}, 
+        {name: '7', value: 7},
+        {name: '8', value: 8},
+        {name: '9', value: 9},
+        {name: '10', value: 10},
+        {name: 'JACK', value: 10},
+        {name: 'QUEEN', value: 10},
+        {name: 'KING', value: 10}, 
+    ]
+    for (suit in suits) {
+        console.log(suit)
+    }
 }
 
 client.login(token)

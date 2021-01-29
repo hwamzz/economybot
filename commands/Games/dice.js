@@ -22,7 +22,7 @@ module.exports = {
         const botRoll = Math.floor(Math.random() * dice.length);
         const playerRoll = Math.floor(Math.random() * dice.length);
         var multiplier = Math.floor(Math.random() * multis.length);
-        if (multiplier === 0) multiplier += 2;
+        if (multiplier < 2) multiplier += 2;
         const draw = bet / 2
         const winnings = bet * multiplier;
 
@@ -34,7 +34,7 @@ module.exports = {
            { name: name + ' Rolled: ', value: playerRoll, inline: true },
            { name: 'Economy Bot Rolled:', value: botRoll, inline: true }
         )
-        .setFooter('Multiplier: ' + multiplier + ' x')
+        .setFooter('Multiplier: ' + multiplier + 'x')
 
         const lossEmbed = new MessageEmbed()
         .setColor('#FF0000')
