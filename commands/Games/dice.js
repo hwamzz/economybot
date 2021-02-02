@@ -2,6 +2,8 @@ const { Client, Message, MessageEmbed } = require('discord.js')
 
 module.exports = {
     name: 'dice',
+    usage: `e!dice <bet>`,
+    description: `Dice against the bot for a chance at getting a 10x multiplier!`,
     /**
      * @param {Client} client
      * @param {Message} message
@@ -13,7 +15,7 @@ module.exports = {
         if(isNaN(args[0])) return message.channel.send('Your bet must be a number!')
 
         const amountToBet = parseInt(args[0]);
-        if(await client.bal(message.author.id) < amountToBet) return message.channel.send(`You don't have enough coins to make this bet!`)
+        if(await client.purse(message.author.id) < amountToBet) return message.channel.send(`You don't have enough coins in your purse to make this bet!`)
 
         const name = message.author.username;
         const bet = args[0]

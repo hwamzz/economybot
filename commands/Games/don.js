@@ -2,7 +2,9 @@ const { Client, Message, MessageEmbed } = require('discord.js');
 
 module.exports = {
     name: 'doubleornothing',
-    aliases: ['don'],
+    usage: `e!doubleornothing <bet>`,
+    aliases: `don`,
+    description: `Double or nothing against the bot, with a 50% chance at doubling your money!`,
     /**
      * @param {Client} client
      * @param {Message} message
@@ -15,7 +17,7 @@ module.exports = {
 
         const amountToBet = parseInt(args[0]);
 
-        if(await client.bal(message.author.id) < amountToBet) return message.channel.send(`You don't have enough coins to make this bet!`)
+        if(await client.purse(message.author.id) < amountToBet) return message.channel.send(`You don't have enough coins to make this bet!`)
 
         function random() {
             const num = Math.floor(Math.random() * 2);

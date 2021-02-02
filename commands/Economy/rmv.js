@@ -2,6 +2,9 @@ const { Client, Message, MessageEmbed } = require('discord.js')
 
 module.exports = {
     name: 'remove',
+    usage: `e!remove <@user> <coins>`,
+    aliases: `r`,
+    description: `Remove coins from a user (ADMIN-ONLY command)`,
     /**
      * @param {Client} client
      * @param {Message} message

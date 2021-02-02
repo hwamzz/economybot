@@ -2,6 +2,8 @@ const { Client, Message, MessageEmbed, Channel } = require('discord.js');
 
 module.exports = {
     name: 'beg',
+    usage: `e!beg`,
+    description: `Beg for coins!`,
     cooldown: 1000 * 60 * 5,
     /**
      * @param {Client} client
@@ -15,7 +17,7 @@ module.exports = {
         const coins = Math.floor(Math.random() * 100) + 1;
 
         const member = message.mentions.members.first() || message.member;
-        const bal = await client.bal(member.id);
+        const bal = await client.purse(member.id);
 
         const begEmbed = new MessageEmbed()
             .setColor('#fff777')

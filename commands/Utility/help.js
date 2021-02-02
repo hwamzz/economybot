@@ -4,8 +4,9 @@ var prefix = 'e!';
 
 module.exports = {
   name: "help",
-  aliases : ['h'],
-  description: "Shows all available bot commands.",
+  usage: `e!help`,
+  aliases: `h`,
+  description: `View all commands in discord!`,
   run: async (client, message, args) => {
 
 
