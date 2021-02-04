@@ -1,4 +1,4 @@
-/**const { Client, Message, MessageEmbed } = require('discord.js');
+const { Client, Message, MessageEmbed } = require('discord.js');
 const prefixSchema = require('../../models/prefix')
 
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
      * @param {Message} message 
      * @param {String[]} args 
      */
-/** run: async(client, message, args) => {
+    run: async(client, message, args) => {
         const res = await args.join(" ")
         if(!res) return message.channel.send('Please specify a prefix to change to!')
 
@@ -34,4 +34,4 @@ module.exports = {
             }
         })
     }
-}*/
+}

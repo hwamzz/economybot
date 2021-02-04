@@ -1,4 +1,4 @@
-/**const { Client, Message, MessageEmbed } = require('discord.js');
+const { Client, Message, MessageEmbed } = require('discord.js');
 const prefixSchema = require('../../models/prefix')
 const prefix = require('../../config.json').prefix
 const {} = require('@reconlx/discord.js')
@@ -12,8 +12,8 @@ module.exports = {
      * @param {Message} message 
      * @param {String[]} args 
      */
-    /**run: async(client, message, args) => {
+    run: async(client, message, args) => {
         await prefixSchema.findOneAndDelete({ Guild : message.guild.id })
         message.channel.send(`The prefix has been reset to ${prefix}`)
     }
-}*/
+}
