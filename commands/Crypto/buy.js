@@ -1,43 +1,68 @@
 const { Client, Message, MessageEmbed } = require('discord.js')
 const querystring = require('querystring')
 const fetch = require('node-fetch')
-const { query } = require('express')
 const { get } = require('https')
-//new Nomics({apiKey: "88f99dbd0b96afd980d4b11c6df15906"})
+const httpClient = require('axios')
+
+// Nomics API
+const endpoint = 'https://api.nomics.com/v1/'
+const resource = 'currencies/ticker'
+const NOMICS_API_KEY = '88f99dbd0b96afd980d4b11c6df15906'; 
+const params = '&interval=1d,30d&convert=GBP&per-page=100&page=1'
 
 module.exports = {
     name: 'buy',
     usage: 'e!buy <cryptocurrency>',
-    description: 'Buy a crypto currency from our list: BTC, XRP or ETH using your purse balance!',
+    description: 'Buy a crypto currency from our list: BTC, LTC or ETH using your purse balance!',
     run: async(client, message, args) => {
-        if(!args[0]) return message.channel.send('Please include a cryptocurrency to buy (BTC, XRP or ETH)')
+        const member = message.member;
+        // Check if there are args
+        if(!args[0]) return message.channel.send('Please include a cryptocurrency to buy (BTC, LTC or ETH)')
         if(!args[1]) return message.channel.send('Please include an amount to buy!')
+        // Define args
         const amountToBuy = parseInt(args[1])
         const cryptocur = args[0].toUpperCase()
-        const crypto = ['BTC', 'XRP', 'ETH', 'eth', 'btc', 'xrp'];
-        if(!crypto.includes(args[0])) return message.channel.send('Invalid cryptocurrency provided (BTC, XRP or ETH)!')
+        const crypto = ['BTC', 'LTC', 'ETH', 'eth', 'btc', 'ltc'];
+        // Check if valid crypto and if args are correct values
+        if(!crypto.includes(args[0])) return message.channel.send('Invalid cryptocurrency provided (BTC, LTC or ETH)!')
         if(!isNaN(args[0])) return message.channel.send('This value cannot be a number')
         if(isNaN(args[1])) return message.channel.send('Amount to buy must be a number')
-        let results = [];
-        const NOMICS_API_KEY = '88f99dbd0b96afd980d4b11c6df15906';
-        await require('axios')
-            .get(`https://api.nomics.com/v1/currencies/ticker?key=88f99dbd0b96afd980d4b11c6df15906&ids=${cryptocur}&interval=1d,30d&convert=GBP&per-page=100&page=1`)
-            .then(response => console.log(response))
-            .map(results)
 
-        //fetch(`https://api.nomics.com/v1/currencies/ticker?key=88f99dbd0b96afd980d4b11c6df15906&ids=${query}&interval=1d,30d&convert=EUR&per-page=100&page=1`)
-        //    .then(response => response.json())
-        //    .then(data => console.log(data))
+        // Get price of crypto
+        let response = [];
+        let url = `${endpoint}${resource}?key=${NOMICS_API_KEY}&ids=${cryptocur}${params}`
+        response = await httpClient.get(url)
+        .catch(err => {
+            console.log(err)
+        })
 
-        //const data = await fetch(`https://api.nomics.com/v1/currencies/ticker?key=88f99dbd0b96afd980d4b11c6df15906&ids=${query}&interval=1d,30d&convert=GBP&per-page=100&page=1`)
-        //if (!data) return message.channel.send('No data found, please try again later!')
+        let price = parseInt(response.data[0].price).toFixed(0);
 
-        message.channel.send(`Fetched ${cryptocur}'s price!`);
-        let coinPrice;
-        const totalCost = coinPrice * amountToBuy
-        //if (await client.purse(message.author.id) > totalCost) return message.channel.send('Not enough coins in purse!')
+        // await require('axios')
+        //     .get(`https://api.nomics.com/v1/currencies/ticker?key=88f99dbd0b96afd980d4b11c6df15906&ids=${cryptocur}&interval=1d,30d&convert=GBP&per-page=100&page=1`)
+        //     .then(response => console.log(response))
+        //     .map(response)
 
-        //client.rmv(message.author.id, totalCost)
+        // Check if they have enough coins, remove the coins from their balance, give them the crypto
+        const totalCost = price * amountToBuy;
+        if(await client.purse(message.author.id) < totalCost) return message.channel.send(`You don't have enough coins to make this purchase!`);
+
+        if (cryptocur === 'BTC') {
+            client.rmv(member.id, totalCost)
+            client.addBTC(member.id, amountToBuy)
+            message.channel.send(`Successfully bought ${amountToBuy} ${cryptocur} for £${totalCost}!`)
+        } else if (cryptocur === 'LTC') {
+            client.rmv(member.id, totalCost)
+            client.addLTC(member.id, amountToBuy)
+            message.channel.send(`Successfully bought ${amountToBuy} ${cryptocur} for £${totalCost}!`)
+        } else if (cryptocur === 'ETH') {
+            client.rmv(member.id, totalCost)
+            client.addETH(member.id, amountToBuy)
+            message.channel.send(`Successfully bought ${amountToBuy} ${cryptocur} for £${totalCost}!`)
+        } else {
+            return message.channel.send('An internal error occured please contact a developer or try again later!')
+        }
+
 
     }
 }

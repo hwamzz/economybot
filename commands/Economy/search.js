@@ -11,20 +11,20 @@ module.exports = {
      * @param {String[]} args
      */
     run: async(client, message, args) => {
-        const begs = ['Jeff Bezos', 'Elon Musk', 'Kermit']
+        const search = ['bin', 'car', 'bed', 'fridge', 'shop', 'sewer', 'kettle', 'house']
 
-        const begIndex = Math.floor(Math.random() * begs.length);
-        const coins = Math.floor(Math.random() * 100) + 1;
+        const searchIndex = Math.floor(Math.random() * search.length);
+        const coins = Math.floor(Math.random() * 200) + 1;
 
         const member = message.mentions.members.first() || message.member;
         const bal = await client.purse(member.id);
 
-        const begEmbed = new MessageEmbed()
+        const searchEmbed = new MessageEmbed()
             .setColor('#fff777')
             .setTitle('Begger!')
-            .setDescription(`${begs[begIndex]} gave you **${coins}** coins!`)
+            .setDescription(`Searching in the **${search[searchIndex]}** gave you **${coins}** coins!`)
 
         client.add(message.author.id, coins);
-        message.channel.send(begEmbed);
+        message.channel.send(searchEmbed);
     }
 }

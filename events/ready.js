@@ -4,6 +4,8 @@ const { getCommands } = require('./../utils/index')
 const path = require('path')
 const config = require('../config.json')
 const prefix = config.prefix;
+const express = require('express')
+
 
 client.on('ready', () => {
     client.user.setActivity(`${prefix}help`)
@@ -15,8 +17,6 @@ client.on('ready', () => {
         channels: client.channels.cache.size
     }
     // express
-
-    const express = require('express')
     const port = process.env.PORT || 3001;
     const app = express();
 

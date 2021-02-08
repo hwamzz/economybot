@@ -1,15 +1,20 @@
 const mongo = require('mongoose')
 
 module.exports = mongo.model(
-    'money',
+    'crypto',
     new mongo.Schema({
         id: String,
-        purse: { 
+        btc: { 
             type: Number, 
             default: 0,
             required: true 
         },
-        bank: { 
+        ltc: { 
+            type: Number, 
+            default: 0,
+            required: true 
+        },
+        eth: { 
             type: Number, 
             default: 0,
             required: true 

@@ -6,6 +6,7 @@ const config = {
     dropCollections: true,
 }
 const currencyshop = require('./models/currencyshop')
+const cr = require('./models/cr')
 require('./models/money')
 require('./models/memberitems')
 const seeder = new Seeder(config);
@@ -46,7 +47,6 @@ const shop = [ currencyshop.updateMany
                 ({ name: 'Cake', cost: 5 }),
             ];
 
-
 (async () => {
     try {
         await seeder.import( [{ name: 'cards', documents: generateCards() }] )
@@ -55,12 +55,3 @@ const shop = [ currencyshop.updateMany
         console.log(err)
     }
 })()
-
-
-try {
-    seedShop.import( [{ name: 'currencyshop', documents: shop }] )
-    console.log('Shop seed complete!')
-} catch (err) {
-    console.log(err)
-}
-
