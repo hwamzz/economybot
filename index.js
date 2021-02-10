@@ -124,12 +124,10 @@ client.addETH = (id, eth) => {
         if(data) {
             data.eth += eth;
         } else {
-            data = new cr({ id, btc, xrp, eth })
+            data = new cr({ id, btc, ltc, eth })
         }
         data.save();
     })
 }
-
-
 
 client.login(token)

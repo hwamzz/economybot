@@ -1,6 +1,4 @@
 const { Client, Message, MessageEmbed } = require('discord.js')
-const querystring = require('querystring')
-const fetch = require('node-fetch')
 const { get } = require('https')
 const httpClient = require('axios')
 
@@ -38,11 +36,6 @@ module.exports = {
 
         let price = parseInt(response.data[0].price).toFixed(0);
 
-        // await require('axios')
-        //     .get(`https://api.nomics.com/v1/currencies/ticker?key=88f99dbd0b96afd980d4b11c6df15906&ids=${cryptocur}&interval=1d,30d&convert=GBP&per-page=100&page=1`)
-        //     .then(response => console.log(response))
-        //     .map(response)
-
         // Check if they have enough coins, remove the coins from their balance, give them the crypto
         const totalCost = price * amountToBuy;
         if(await client.purse(message.author.id) < totalCost) return message.channel.send(`You don't have enough coins to make this purchase!`);
@@ -62,7 +55,5 @@ module.exports = {
         } else {
             return message.channel.send('An internal error occured please contact a developer or try again later!')
         }
-
-
     }
 }
