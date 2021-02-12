@@ -20,10 +20,7 @@ module.exports = {
         const member = message.mentions.members.first() || message.member;
         client.add(message.author.id, coins);
         const bal = await client.purse(member.id);
-        const workEmbed = new MessageEmbed()
-            .setColor('#fff777')
-            .setTitle('Worker!')
-            .setDescription(`You worked as ${jobs[jobIndex]} and earned **${coins}** coins!`)
-        message.channel.send(workEmbed);
+
+        message.channel.send(`You worked as a **${jobs[jobIndex]}** and earned **${coins}** coins!`);
     }
 }

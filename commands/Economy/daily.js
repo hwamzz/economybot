@@ -14,12 +14,8 @@ module.exports = {
      */
     run: async(client, message, args) => {
         const coins = Math.floor(Math.random() * 2000) + 1;
-        const dailyEmbed = new MessageEmbed()
-        .setColor('#fff777')
-        .setTitle('Daily Coins!')
-        .setDescription(`You received **${coins}** coins today! Make sure to claim your daily tomorrow!`)
 
         client.add(message.author.id, coins);
-        message.channel.send(dailyEmbed);
+        message.channel.send(`You received **${coins}** coins today! Make sure to claim your daily tomorrow!`);
     }
 }

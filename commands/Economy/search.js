@@ -1,9 +1,9 @@
 const { Client, Message, MessageEmbed, Channel } = require('discord.js');
 
 module.exports = {
-    name: 'beg',
-    usage: `e!beg`,
-    description: `Beg for coins!`,
+    name: 'search',
+    usage: `e!search`,
+    description: `Search for coins!`,
     cooldown: 1000 * 60 * 5,
     /**
      * @param {Client} client
@@ -18,13 +18,8 @@ module.exports = {
 
         const member = message.mentions.members.first() || message.member;
         const bal = await client.purse(member.id);
-
-        const searchEmbed = new MessageEmbed()
-            .setColor('#fff777')
-            .setTitle('Begger!')
-            .setDescription(`Searching in the **${search[searchIndex]}** gave you **${coins}** coins!`)
-
+        
         client.add(message.author.id, coins);
-        message.channel.send(searchEmbed);
+        message.channel.send(`Searching in the **${search[searchIndex]}** gave you **${coins}** coins!`);
     }
 }

@@ -19,12 +19,7 @@ module.exports = {
         const member = message.mentions.members.first() || message.member;
         const bal = await client.purse(member.id);
 
-        const begEmbed = new MessageEmbed()
-            .setColor('#fff777')
-            .setTitle('Begger!')
-            .setDescription(`${begs[begIndex]} gave you **${coins}** coins!`)
-
         client.add(message.author.id, coins);
-        message.channel.send(begEmbed);
+        message.channel.send(`**${begs[begIndex]}** gave you **${coins}** coins!`);
     }
 }

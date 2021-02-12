@@ -13,12 +13,8 @@ module.exports = {
      */
     run: async(client, message, args) => {
         const coins = Math.floor(Math.random() * 10000) + 1;
-        const weeklyEmbed = new MessageEmbed()
-        .setColor('#fff777')
-        .setTitle('Weekly Coins!')
-        .setDescription(`You received **${coins}** coins! Make sure to claim your coins every week!`)
 
         client.add(message.author.id, coins);
-        message.channel.send(weeklyEmbed);
+        message.channel.send(`You received **${coins}** coins! Make sure to claim your coins every week!`);
     }
 }

@@ -13,11 +13,13 @@ module.exports = {
     run: async(client, message, args) => {
         if (!args[0]) return message.channel.send('Please include an amount to add!')
         if (!args[1]) return message.channel.send('Please mention the user you want to add balance to!')
+        if (isNaN(args[0])) return message.channel.send('Amount to remove must be a number!')
 
+        const coins = parseInt(args[0])
         const member = message.mentions.members.first();
         if (!message.member.hasPermission(['ADMINISTRATOR'])) return message.channel.send('No permission to add balance!')
-        client.add(member.id, parseInt(args[0]));
+        client.add(member.id, coins);
 
-        message.channel.send('Added balance')
+        message.channel.send(`Added **${coins}** coins to **${member}**!`)
     }
 }
