@@ -13,6 +13,7 @@
     "@reconlx/discord.js": "^1.1.101",
     "ascii-table": "0.0.9",
     "axios": "^0.21.1",
+    "canvacord": "^5.1.0",
     "coingecko-api": "^1.0.10",
     "discord.js": "^12.5.1",
     "ejs": "^3.1.5",
