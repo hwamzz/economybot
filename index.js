@@ -7,7 +7,7 @@ const money = require('./models/money');
 const crypto = require('./models/cr');
 const mongo = require('mongoose');
 
-mongo.connect("mongodb+srv://hwamzz:Hooded789@cluster0.ndh1e.mongodb.net/test", {
+mongo.connect("mongodb+srv://hwamzz:@cluster0.ndh1e.mongodb.net/test", {
     useUnifiedTopology: true,
     useNewUrlParser: true
 })
